@@ -17,7 +17,8 @@
         public function login($email, $password) {
             $stmt = $this->pdo->prepare("SELECT `user_id` FROM `users` WHERE `email` = :email AND `password` = :pass");
             $stmt->bindParam(":email", $email);
-            $stmt->bindParam(":pass", md5($password));
+            $hashpass = md5($password);
+            $stmt->bindParam(":pass", $hashpass);
             $stmt->execute();
 
             $user = $stmt->fetch(PDO::FETCH_OBJ);
@@ -29,6 +30,13 @@
             } else {
                 return false;
             }
+        }
+
+        public function userData($user_id) {
+            $stmt = $this->pdo->prepare("SELECT * FROM `users` WHERE `user_id` = :user_id");
+            $stmt->bindParam(":user_id", $user_id, PDO::PARM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_OBJ);
         }
     }
 ?>
