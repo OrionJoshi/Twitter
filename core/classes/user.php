@@ -38,5 +38,11 @@
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_OBJ);
         }
+
+        public function logout() {
+            $_SESSION = array();
+            session_destroy();
+            header('Location: ../index.php');
+        }
     }
 ?>
