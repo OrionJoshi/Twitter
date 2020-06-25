@@ -10,6 +10,10 @@
 
             if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $error = 'Invalid Format';
+            } else {
+                if($getFromU->login($email, $password) === false) {
+                    $error = "The email or password is incorrect!";
+                }
             }
         } else {
             $error = "Please enter username and password";
