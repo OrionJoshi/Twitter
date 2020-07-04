@@ -12,7 +12,7 @@
 
 		if(!empty($status) or !empty($_FILES['file']['name'][0])) {
 			if(!empty($_FILES['file']['name'][0])) {
-				$tweetImage = $getFromU_>uploadImage($_FILES['file']);
+				$tweetImage = $getFromU->uploadImage($_FILES['file']);
 			}
 
 			if(strlen($status) > 140) {
@@ -83,6 +83,8 @@
 </div><!-- header wrapper end -->
 
 <script type="text/javascript" src = "assets/js/search.js"></script>
+<script type="text/javascript" src = "assets/js/hashtag.js"></script>
+
 
 <!---Inner wrapper-->
 <div class="inner-wrapper">
@@ -187,7 +189,7 @@
 			
 				<!--Tweet SHOW WRAPPER-->
 				 <div class="tweets">
- 				  	<!--TWEETS HERE-->
+ 				  	<?php $getFromT->tweets(); ?>
  				 </div>
  				<!--TWEETS SHOW WRAPPER-->
 
