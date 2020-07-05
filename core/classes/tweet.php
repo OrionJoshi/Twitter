@@ -33,7 +33,7 @@
                                             <span>'.$tweet->postedOn.'</span>
                                         </div>
                                         <div class="t-h-c-dis">
-                                            '.$tweet->status.'
+                                            '.$this->getTweetLink($tweet->status).'
                                         </div>
                                     </div>
                                 </div>';
@@ -99,6 +99,13 @@
                     $stmt->execute(array(':hashtag' => $trend));
                 }
             }
+        }
+
+        public function getTweetLink($tweet) {
+            $tweet = preg_replace("/(https?:\/\/)([\w]+.)([\w\.]+)/", "<a href='$0' target='_blink'>$0</a>", $tweet);
+            $tweet = preg_replace("/#([\w]+)/", "<a href='".BASE_URL."hashtag/$1'>$0</a>", $tweet);
+            $tweet = preg_replace("/@([\w]+)/", "<a href='".BASE_URL."$1'>$0</a>", $tweet);
+            return $tweet;
         }
     }
 ?>
