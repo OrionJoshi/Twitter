@@ -55,7 +55,7 @@
                                     <ul> 
                                         <li><button><a href="#"><i class="fa fa-share" aria-hidden="true"></i></a></button></li>	
                                         <li><button><a href="#"><i class="fa fa-retweet" aria-hidden="true"></i></a></button></li>
-                                        <li><button><a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a></button></li>
+                                        <li><button class="like-btn" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a><span class="likesCounter"></span></button></li>
                                             <li>
                                             <a href="#" class="more"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
                                             <ul> 
@@ -106,6 +106,14 @@
             $tweet = preg_replace("/#([\w]+)/", "<a href='".BASE_URL."hashtag/$1'>$0</a>", $tweet);
             $tweet = preg_replace("/@([\w]+)/", "<a href='".BASE_URL."$1'>$0</a>", $tweet);
             return $tweet;
+        }
+
+        public function addLike($user_id, $tweet_id, $get_id) {
+            $stmt = $this->pdo->prepare("UPDATE `tweets` SET `likesCount` = `likesCount` +1 WHERE `tweetID` = :tweet_id");
+            $stmt->bindParam(":tweet_id", $tweet_id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $this->create('likes', array('likeBy' => $user_id, 'likeOn' => $tweet_id));
         }
     }
 ?>
