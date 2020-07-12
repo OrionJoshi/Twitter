@@ -195,7 +195,7 @@
 			
 				<!--Tweet SHOW WRAPPER-->
 				 <div class="tweets">
- 				  	<?php $getFromT->tweets(); ?>
+ 				  	<?php $getFromT->tweets($user_id); ?>
  				 </div>
  				<!--TWEETS SHOW WRAPPER-->
 
@@ -204,7 +204,8 @@
 		    	</div>
 				<div class="popupTweet"></div>
 				<!--Tweet END WRAPER-->
- 			
+ 			<script src="assets/js/like.js"></script>
+			<script src="assets/js/retweet.js"></script>
 			</div><!-- in left wrap-->
 		</div><!-- in center end -->
 
