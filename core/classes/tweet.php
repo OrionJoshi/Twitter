@@ -55,8 +55,8 @@
                                 <div class="t-s-f-right">
                                     <ul> 
                                         <li><button><a href="#"><i class="fa fa-share" aria-hidden="true"></i></a></button></li>	
-                                        <li><button><a href="#"><i class="fa fa-retweet" aria-hidden="true"></i></a></button></li>
-                                        <li>'.(($likes['likeOn'] === $tweet->tweetID) ? '<button class="unlike-btn" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a><span class="likesCounter">'.$tweet->likesCount.'</span></button>' : '<button class="like-btn" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a><span class="likesCounter">'.(($tweet->likesCount > 0) ? $tweet->likesCount : '').'</span></button>').'</li>
+                                        <li><button class="retweet" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><i class="fa fa-retweet" aria-hidden="true"></i><span class="retweetsCount"></span></button></li>
+                                        <li>'.(($likes['likeOn'] === $tweet->tweetID) ? '<button class="unlike-btn" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><i class="fa fa-heart" aria-hidden="true"></i><span class="likesCounter">'.$tweet->likesCount.'</span></button>' : '<button class="like-btn" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a><span class="likesCounter">'.(($tweet->likesCount > 0) ? $tweet->likesCount : '').'</span></button>').'</li>
                                             <li>
                                             <a href="#" class="more"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
                                             <ul> 
@@ -108,13 +108,23 @@
             $tweet = preg_replace("/@([\w]+)/", "<a href='".BASE_URL."$1'>$0</a>", $tweet);
             return $tweet;
         }
-
         public function addLike($user_id, $tweet_id, $get_id) {
             $stmt = $this->pdo->prepare("UPDATE `tweets` SET `likesCount` = `likesCount` +1 WHERE `tweetID` = :tweet_id");
             $stmt->bindParam(":tweet_id", $tweet_id, PDO::PARAM_INT);
             $stmt->execute();
 
             $this->create('likes', array('likeBy' => $user_id, 'likeOn' => $tweet_id));
+        }
+
+        public function unlike($user_id, $tweet_id, $get_id) {
+            $stmt = $this->pdo->prepare("UPDATE `tweets` SET `likesCount` = `likesCount` -1 WHERE `tweetID` = :tweet_id");
+            $stmt->bindParam(":tweet_id", $tweet_id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $stmt = $this->pdo->prepare("DELETE FROM `likes` WHERE `likeBy` = :user_id AND `likeOn` = :tweet_id");
+            $stmt->bindParam(":user_id", $user_id, PDO::PARAM_INT);
+            $stmt->bindParam(":tweet_id", $tweet_id, PDO::PARAM_INT);
+            $stmt->execute();
         }
 
         public function likes($user_id, $tweet_id) {
