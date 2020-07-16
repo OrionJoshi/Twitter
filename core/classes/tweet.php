@@ -130,6 +130,14 @@
 
         }
 
+        public function checkRetweet($tweet_id, $user_id) {
+            $stmt = $this->pdo->prepare("SELECT * FROM `tweets` WHERE `retweetID` = :tweet_id AND `retweetBy` = :user_id OR `tweetID` = :tweet_id AND `retweetBy` = :user_id");
+            $stmt->bindParam(":tweet_id", $tweet_id, PDO::PARAM_INT);
+            $stmt->bindParam(":user_id", $user_id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
         public function addLike($user_id, $tweet_id, $get_id) {
             $stmt = $this->pdo->prepare("UPDATE `tweets` SET `likesCount` = `likesCount` +1 WHERE `tweetID` = :tweet_id");
             $stmt->bindParam(":tweet_id", $tweet_id, PDO::PARAM_INT);
