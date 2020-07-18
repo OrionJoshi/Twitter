@@ -206,6 +206,7 @@
 				<!--Tweet END WRAPER-->
  			<script src="assets/js/like.js"></script>
 			<script src="assets/js/retweet.js"></script>
+			<script src="assets/js/popuptweets.js"></script>
 			</div><!-- in left wrap-->
 		</div><!-- in center end -->
 
