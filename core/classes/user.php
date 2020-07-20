@@ -100,6 +100,21 @@
             $stmt->execute();
         }
 
+        public function delete($table, $array) {
+            $sql = "DELETE FROM `{$table}`";
+            $where = " WHERE ";
+
+            foreach($array as $name => $value) {
+                $sql .= "{$where} `{$name}` = :{$name}";
+                $where = " AND ";
+            }
+
+            if($stmt = $this->pdo->prepare($sql)) {
+                foreach($array as $name => $value) {
+                    $stmt->bindValue(':'.$name, $value);
+                }
+                $stmt->execute();           }
+        }
         public function checkUsername($username) {
             $stmt = $this->pdo->prepare("SELECT `email` FROM `users` WHERE `username` = :username");
             $stmt->bindParam(":username", $username, PDO::PARAM_STR);
