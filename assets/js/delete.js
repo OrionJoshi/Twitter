@@ -1,4 +1,10 @@
 $(function(){
+    $(document).on('click', '.deleteTweet', function(){
+        var tweet_id = $(this).data('tweet');
+        $.post('http://localhost/twitter/core/ajax/deleteTweet.php', {showPopup:tweet_id}, function(data){
+            $('.popupTweet').html(data);
+        });
+    });
     $(document).on('click', '.deleteComment', function(){
         var commentID = $(this).data('comment');
         var tweet_id   = $(this).data('tweet');
