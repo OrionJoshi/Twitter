@@ -207,6 +207,9 @@
  			<script src="assets/js/like.js"></script>
 			<script src="assets/js/retweet.js"></script>
 			<script src="assets/js/popuptweets.js"></script>
+			<script src="assets/js/comment.js"></script>
+			<script src="assets/js/delete.js"></script>
+
 			</div><!-- in left wrap-->
 		</div><!-- in center end -->
 
