@@ -189,6 +189,22 @@
             return $stmt->fetchAll(PDO::FETCH_OBJ);
         }
 
+        public function countTweets($user_id) {
+            $stmt = $this->pdo->prepare("SELECT COUNT('tweet_id') AS `totalTweets` FROM `tweets` WHERE `tweetBy` = :user_id AND `retweetID` = '0' OR `retweetBy` = :user_id");
+            $stmt->bindParam(":user_id", $user_id, PDO::PARAM_INT);
+            $stmt->execute();
+            $count = $stmt->fetch(PDO::FETCH_OBJ);
+            echo $count->totalTweets;
+        }
+
+        public function countLikes($user_id) {
+            $stmt = $this->pdo->prepare("SELECT COUNT(`likeID`) AS `totalLikes` FROM `likes` WHERE `likeBy` = :user_id");
+            $stmt->bindParam(":user_id", $user_id, PDO::PARAM_INT);
+            $stmt->execute();
+            $count = $stmt->fetch(PDO::FETCH_OBJ);
+            echo $count->totalLikes;
+        }
+
         public function addLike($user_id, $tweet_id, $get_id) {
             $stmt = $this->pdo->prepare("UPDATE `tweets` SET `likesCount` = `likesCount` +1 WHERE `tweetID` = :tweet_id");
             $stmt->bindParam(":tweet_id", $tweet_id, PDO::PARAM_INT);
