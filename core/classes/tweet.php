@@ -35,7 +35,7 @@
                                         <div class="t-h-c-name">
                                             <span><a href="'.BASE_URL.$user->username.'">'.$user->screenName.'</a></span>
                                             <span>@'.$user->username.'</span>
-                                            <span>'.$retweet['postedOn'].'</span>
+                                            <span>'.$this->timeAgo($retweet['postedOn']).'</span>
                                         </div>
                                         <div class="t-h-c-dis">
                                             '.$this->getTweetLink($tweet->retweetMsg).'
@@ -53,7 +53,7 @@
                                             <div class="t-h-c-name">
                                                 <span><a href="'.BASE_URL.$tweet->username.'">'.$tweet->screenName.'</a></span>
                                                 <span>@'.$tweet->username.'</span>
-                                                <span>'.$tweet->postedOn.'</span>
+                                                <span>'.$this->timeAgo($tweet->postedOn).'</span>
                                             </div>
                                             <div class="retweet-t-s-b-inner-right-text">		
                                             '.$tweet->status.'
@@ -74,7 +74,7 @@
                                         <div class="t-h-c-name">
                                             <span><a href="'.$tweet->username.'">'.$tweet->screenName.'</a></span>
                                             <span>@'.$tweet->username.'</span>
-                                            <span>'.$tweet->postedOn.'</span>
+                                            <span>'.$this->timeAgo($tweet->postedOn).'</span>
                                         </div>
                                         <div class="t-h-c-dis">
                                             '.$this->getTweetLink($tweet->status).'
