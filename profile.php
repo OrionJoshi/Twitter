@@ -261,7 +261,7 @@
 									<div class="t-h-c-name">
 										<span><a href="'.BASE_URL.$user->username.'">'.$user->screenName.'</a></span>
 										<span>@'.$user->username.'</span>
-										<span>'.$getFromU->timeAgo($retweet['postedOn']).'</span>
+										<span>'.$getFromU->timeAgo($tweet->postedOn).'</span>
 									</div>
 									<div class="t-h-c-dis">
 										'.$getFromT->getTweetLink($tweet->retweetMsg).'
@@ -275,14 +275,14 @@
 									<div class="retweet-t-s-b-inner-left">
 										<img src="'.BASE_URL.$tweet->tweetImage.'" class="imagePopup" data-tweet="'.$tweet->tweetID.'"/>	
 									</div>' : '').'
-									<div class="retweet-t-s-b-inner-right">
+									<div>
 										<div class="t-h-c-name">
 											<span><a href="'.BASE_URL.$tweet->username.'">'.$tweet->screenName.'</a></span>
 											<span>@'.$tweet->username.'</span>
 											<span>'.$getFromU->timeAgo($tweet->postedOn).'</span>
 										</div>
 										<div class="retweet-t-s-b-inner-right-text">		
-										'.$tweet->status.'
+										'. $getFromT->getTweetLink($tweet->status).'
 										</div>
 									</div>
 								</div>
@@ -294,7 +294,7 @@
 							<div class="t-show-popup" data-tweet="'.$tweet->tweetID.'">
 								<div class="t-show-head">
 									<div class="t-show-img">
-										<img src="'.$tweet->profileImage.'"/>
+										<img src="'.BASE_URL.$tweet->profileImage.'"/>
 									</div>
 								<div class="t-s-head-content">
 									<div class="t-h-c-name">
@@ -312,7 +312,7 @@
 								 <div class="t-show-body">
 									<div class="t-s-b-inner">
 										<div class="t-s-b-inner-in">
-											<img src="'.$tweet->tweetImage.'" class="imagePopup" data-tweet="'.$tweet->tweetID.'"/>
+											<img src="'.BASE_URL.$tweet->tweetImage.'" class="imagePopup" data-tweet="'.$tweet->tweetID.'"/>
 										</div>
 									</div>
 								</div>
@@ -323,6 +323,7 @@
 						<div class="t-show-footer">
 							<div class="t-s-f-right">
 								<ul> 
+								'.(($getFromU->loggedIn() === true) ? '
 									<li><button><a href="#"><i class="fa fa-share" aria-hidden="true"></i></a></button></li>	
 									<li>'.(isset($retweet['retweetID']) ? (($tweet->tweetID === $retweet['retweetID'] OR $user_id == $retweet['retweetBy']) ? '<button class="retweeted" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><i class="fa fa-retweet" aria-hidden="true"></i><span class="retweetsCount">'.$tweet->retweetCount.'</span></button>' : '<button class="retweet" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><i class="fa fa-retweet" aria-hidden="true"></i><span class="retweetsCount">'.(($tweet->retweetCount > 0) ? $tweet->retweetCount : '').'</span></button>') : '<button class="retweet" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><i class="fa fa-retweet" aria-hidden="true"></i><span class="retweetsCount">'.(($tweet->retweetCount > 0) ? $tweet->retweetCount : '').'</span></button>' ).'</li>
 									<li>'.(isset($likes['likeOn']) ? (($likes['likeOn'] === $tweet->tweetID) ? '<button class="unlike-btn" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><i class="fa fa-heart" aria-hidden="true"></i><span class="likesCounter">'.$tweet->likesCount.'</span></button>' : '<button class="like-btn" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a><span class="likesCounter">'.(($tweet->likesCount > 0) ? $tweet->likesCount : '').'</span></button>') : '<button class="like-btn" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a><span class="likesCounter">'.(($tweet->likesCount > 0) ? $tweet->likesCount : '').'</span></button>' ).'</li>
@@ -333,6 +334,10 @@
 										<li><label class="deleteTweet" data-tweet="'.$tweet->tweetID.'">Delete Tweet</label></li>
 										</ul>
 									</li>' : '').'
+									' : '<li><button><a href="#"><i class="fa fa-share" aria-hidden="true"></i></a></button></li>
+										<li><button><a href="#"><i class="fa fa-retweet" aria-hidden="true"></i></a></button></li>	
+										<li><button><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></button></li>	
+									').'
 								</ul>
 							</div>
 						</div>
