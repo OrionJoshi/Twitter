@@ -220,7 +220,7 @@
                 return date('M j', $time);
 
             } else {
-                return data('j M Y', $time);
+                return date('j M Y', $time);
             }
         }
     }
