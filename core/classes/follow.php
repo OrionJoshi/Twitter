@@ -48,5 +48,10 @@
             echo json_encode($data);
         }
 
+        public function addFollowCount($followID, $user_id) {
+            $stmt = $this->pdo->prepare("UPDATE `users` SET `following` = `following` + 1 WHERE `user_id` :user_id; UPDATE `users` SET `followers` = `followers` + 1 WHERE `user_id` =:followID");
+            $stmt->execute(array("user_id" => $user_id, "followID" => $followID));
+
+        }
     }
 ?>
