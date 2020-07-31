@@ -38,5 +38,15 @@
                 echo "<button class='f-btn' onclick=location.href='index.php'><i class='fa fa-user-plus'></i>Follow</button>";
             }
         }
+
+        public function follow($followID, $user_id) {
+            $this->create('follow', array('sender' => $user_id, 'receiver'=> $followerID, 'followOn' => date("Y:M:D H:i:s")));
+            $this->addFollowCount($followID, $user_id);
+            $stmt = $this->pdo->prepare('SELECT * FROM `users` WHERE `user_id` :followID');
+            $stmt->execute(array("followID" => $followID));
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
+            echo json_encode($data);
+        }
+
     }
 ?>
