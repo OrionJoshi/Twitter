@@ -22,20 +22,20 @@
                 if($profileID != $user_id) {
                     if($data['receiver'] == $profileID) {
                         //Following btn
-                        echo "<button class='f-btn following-btn follow-btn' data-follow='".$profileID."'>Following</button>";
+                        return "<button class='f-btn following-btn follow-btn' data-follow='".$profileID."'>Following</button>";
                     } else{
                         //Follow button
-                        echo "<button class='f-btn  follow-btn' data-follow='".$profileID."'><i class='fa fa-user-plus'></i>Follow</button>";
+                        return "<button class='f-btn  follow-btn' data-follow='".$profileID."'><i class='fa fa-user-plus'></i>Follow</button>";
 
                     }
                 }else {
                     //edit button
-                    echo "<button class='f-btn' onclick=location.href='profileEdit.php'>Edit Profile</button>";
+                    return "<button class='f-btn' onclick=location.href='profileEdit.php'>Edit Profile</button>";
 
                 }
 
             } else {
-                echo "<button class='f-btn' onclick=location.href='index.php'><i class='fa fa-user-plus'></i>Follow</button>";
+                return "<button class='f-btn' onclick=location.href='index.php'><i class='fa fa-user-plus'></i>Follow</button>";
             }
         }
 
