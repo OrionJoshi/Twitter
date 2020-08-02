@@ -124,7 +124,8 @@
                             </ul>
                         </div>
                         <div class="t-fo-right">
-                            <input type="submit" id="postComment">
+                            <input type="submit" id="postComment" value="Tweet">
+                            <script src="<?php echo BASE_URL;?>assets/js/follow.js"></script>
                         </div>
                     </div>
                 </div><!--tweet-show-popup-footer-input-wrap end-->
