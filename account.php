@@ -89,7 +89,7 @@
 					</div>
 				</div>
 				</li>
-				<li><label for="pop-up-tweet">Tweet</label></li>
+				<li><label class="addTweetBtn">Tweet</label></li>
 
 			</ul>
 		</div>
@@ -97,7 +97,9 @@
  
 	</div>
 	<!-- nav ends -->
-
+		<script src="<?php echo BASE_URL; ?>assets/js/popupForm.js"></script>
+		<script src="<?php echo BASE_URL; ?>assets/js/search.js"></script>
+		<script src="<?php echo BASE_URL; ?>assets/js/hashtag.js"></script>
 </div><!-- nav container ends -->
 </div><!-- header wrapper end -->
 		
