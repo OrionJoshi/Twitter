@@ -21,6 +21,9 @@ $(function(){
                     autoscroll = true;
                 }
             });
+            $('.close-msgPopup').click(function(){
+                clearInterval(timer);
+            });
         });
         getMessages = function(){
             $.post('http://localhost/twitter/core/ajax/messages.php', {showChatMessage:get_id}, function(data){
@@ -36,6 +39,9 @@ $(function(){
                         autoscroll = true;
                     }
                 });
+                $('.close-msgPopup').click(function(){
+                    clearInterval(timer);
+                });
             });
         }
 
@@ -46,5 +52,12 @@ $(function(){
         scrolldown = function(){
             $('#chat').scrollTop($('#chat')[0].scrollHeight);
         }
+        $(document).on('click', '.back-messages', function(){
+            var getMessages = 1;
+            $.post('http://localhost/twitter/core/ajax/messages.php', {showMessage:getMessages}, function(data){
+                $('.popupTweet').html(data);
+                clearInterval(timer);
+            });
+        });
     });
 });
