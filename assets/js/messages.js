@@ -27,7 +27,7 @@ $(function(){
         });
         getMessages = function(){
             $.post('http://localhost/twitter/core/ajax/messages.php', {showChatMessage:get_id}, function(data){
-                $('.main-msg-inner').append(data);
+                $('.main-msg-inner').html(data);
                 if(autoscroll) {
                     scrolldown();
                 }
@@ -45,7 +45,7 @@ $(function(){
             });
         }
 
-        var timer = setInterval(getMessages, 1000);
+        var timer = setInterval(getMessages, 5000);
         getMessages();
 
         autoscroll = true;
@@ -57,6 +57,22 @@ $(function(){
             $.post('http://localhost/twitter/core/ajax/messages.php', {showMessage:getMessages}, function(data){
                 $('.popupTweet').html(data);
                 clearInterval(timer);
+            });
+        });
+
+        $(document).on('click', '.deleteMsg', function(){
+            var messageID = $(this).data('message');
+            $('.message-del-inner').height('200px');
+            $(document).on('click', '.cancel', function(){
+                $('.message-del-inner').height('0px');
+            });
+
+            $(document).on('click', '.delete', function(){
+                $.post('http://localhost/twitter/core/ajax/messages.php', {deleteMsg:messageID}, function(){
+                    $('.message-del-inner').height('0px');
+                    getMessages();
+                });
+                $('.message-del-inner').height('0px');
             });
         });
     });
