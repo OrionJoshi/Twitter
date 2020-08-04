@@ -78,7 +78,7 @@
 					</div>
 				</div>
 				</li>
-				<li><label for="pop-up-tweet">Tweet</label></li>
+				<li><label class="addTweetBtn">Tweet</label></li>
 
 			</ul>
 		</div>
@@ -86,7 +86,11 @@
  
 	</div>
 	<!-- nav ends -->
-
+	<script src="<?php echo BASE_URL; ?>assets/js/popupForm.js"></script>
+	<script src="<?php echo BASE_URL; ?>assets/js/search.js"></script>
+	<script src="<?php echo BASE_URL; ?>assets/js/hashtag.js"></script>
+	<script src="<?php echo BASE_URL; ?>assets/js/delete.js"></script>
+	<script src="<?php echo BASE_URL; ?>assets/js/messages.js"></script>
 </div><!-- nav container ends -->
 </div><!-- header wrapper end -->
 		
@@ -210,6 +214,9 @@
 	</div>
 	<!--RIGHTER ENDS-->
 </div>
+<div class="popupTweet"></div>
+<script src="<?php echo BASE_URL; ?>assets/js/postMessage.js"></script>
+
 <!--CONTAINER_WRAP ENDS-->
 </div>
 <!-- ends wrapper -->

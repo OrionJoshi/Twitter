@@ -254,7 +254,10 @@
 		<script src="<?php echo BASE_URL; ?>assets/js/comment.js"></script>
 		<script src="<?php echo BASE_URL; ?>assets/js/popupForm.js"></script>
 		<script src="<?php echo BASE_URL; ?>assets/js/search.js"></script>
-		<script src="<?php echo BASE_URL; ?>assets/js/hashtag.js"></script>		<!--FOLLOWING OR FOLLOWER FULL WRAPPER END-->	
+		<script src="<?php echo BASE_URL; ?>assets/js/hashtag.js"></script>	
+		<script src="<?php echo BASE_URL; ?>assets/js/messages.js"></script>
+		<script src="<?php echo BASE_URL; ?>assets/js/postMessage.js"></script>
+		<!--FOLLOWING OR FOLLOWER FULL WRAPPER END-->	
 	</div><!--in full wrap end-->
 </div>
 <!-- in wrappper ends-->
