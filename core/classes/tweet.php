@@ -261,5 +261,12 @@
             }
             echo '</div></div>';
         }
+
+        public function getTweetsByHash($hashtag) {
+            $stmt = $this->pdo->prepare("SELECT * FROM `tweets` LEFT JOIN `users` ON `tweetBy` = `user_id` WHERE `status` LIKE :hashtag OR `retweetMsg` LIKE :hashtag");
+            $stmt->bindValue(":hashtag", '%#'.$hashtag.'%', PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        }
     }
 ?>
