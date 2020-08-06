@@ -30,7 +30,7 @@
                     }
                 }else {
                     //edit button
-                    return "<button class='f-btn' onclick=location.href='profileEdit.php'>Edit Profile</button>";
+                    return "<button class='f-btn' onclick=location.href='".BASE_URL."profileEdit.php'>Edit Profile</button>";
 
                 }
 
