@@ -150,7 +150,7 @@
 		</div><!-- info box end-->
 
 	<!--==TRENDS==-->
- 	  <!---TRENDS HERE-->
+		<?php $getFromT->trends(); ?>
  	<!--==TRENDS==-->
 
 	</div><!-- in left wrap-->

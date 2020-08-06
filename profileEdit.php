@@ -463,7 +463,7 @@
 		<!--==WHO TO FOLLOW==-->
 			
 		<!--==TRENDS==-->
- 	 	   <!-- HERE -->
+		<?php $getFromT->trends(); ?>
 	 	<!--==TRENDS==-->
 	</div>
 	<!-- in left wrap-->

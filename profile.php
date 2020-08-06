@@ -373,7 +373,7 @@
 		<!--==WHO TO FOLLOW==-->
 			
 		<!--==TRENDS==-->
-	 	   <!--Trends-->
+	 	   <?php $getFromT->trends(); ?>
 	 	<!--==TRENDS==-->
 			
 	</div><!-- in right wrap-->
