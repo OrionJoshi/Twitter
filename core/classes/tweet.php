@@ -268,5 +268,13 @@
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_OBJ);
         }
+
+        public function getUsersByHash($hashtag) {
+            $stmt = $this->pdo->prepare("SELECT DISTINCT * FROM `tweets` INNER JOIN `users` ON `tweetBy` = `user_id` WHERE `status` LIKE :hashtag OR `retweetMsg` LIKE :hashtag GROUP BY `user_id`");
+            $stmt->bindValue(":hashtag", '%#'.$hashtag.'%', PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        }
     }
 ?>
