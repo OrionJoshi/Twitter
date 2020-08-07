@@ -83,6 +83,12 @@
             $stmt->execute();
         }
 
+        public function notificationViewed($user_id) {
+            $stmt = $this->pdo->prepare("UPDATE `notification` SET `status` = '1' WHERE `notificationFor` = :user_id");
+            $stmt->bindParam(":user_id", $user_id, PDO::PARAM_INT);
+            $stmt->execute();
+        }
+
         public function notification($user_id) {
             $stmt = $this->pdo->prepare("SELECT * FROM `notification` N 
                                                    LEFT JOIN `users` U ON N. `notificationFrom` = U.`user_id`
