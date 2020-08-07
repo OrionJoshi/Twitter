@@ -5,7 +5,8 @@
     }
 
     $user_id = $_SESSION['user_id'];
-    $user    = $getFromU->userData($user_id);
+	$user    = $getFromU->userData($user_id);
+	$notify  = $getFromM->getNotificationCount($user_id);
 
     if(isset($_POST['screenName'])) {
         if(!empty($_POST['screenName'])) {
@@ -49,7 +50,7 @@
 <!doctype html>
 <html>
 <head>
-	<title>Profile edit page</title>
+	<title><?php echo $profileData->screenName.'(@'.$profileData->username.') edit page'; ?></title>
 	<meta charset="UTF-8" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css"/>
 	<link rel="stylesheet" href="assets/css/style-complete.css"/>
@@ -67,8 +68,10 @@
 		<div class="nav-left">
 			<ul>
 				<li><a href="home.php"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
-				<li><a href="i/notifications"><i class="fa fa-bell" aria-hidden="true"></i>Notification</a></li>
-				<l><i class="fa fa-envelope" aria-hidden="true"></i>Messages</li>
+				<?php if($getFromU->loggedIn() === true) { ?>
+				<li><a href="<?php echo BASE_URL;?>i/notifications"><i class="fa fa-bell" aria-hidden="true"></i>Notifications<span id="notification"><?php if($notify->totalN > 0){ echo '<span class="span-i">'.$notify->totalN.'</span>';} ?></span></a></li>
+				<li id="messagePopup"><i class="fa fa-envelope" aria-hidden="true"></i>Messages<span id="messages"><?php if($notify->totalM > 0){ echo '<span class="span-i">'.$notify->totalM.'</span>';} ?></span></li>
+				<?php } ?>	
 			</ul>
 		</div>
 		<!-- nav left ends-->
@@ -451,6 +454,7 @@
 		<script src="<?php echo BASE_URL; ?>assets/js/hashtag.js"></script>
 		<script src="<?php echo BASE_URL; ?>assets/js/messages.js"></script>
 		<script src="<?php echo BASE_URL; ?>assets/js/postMessage.js"></script>
+		<script src="<?php echo BASE_URL; ?>assets/js/notification.js"></script>
 
 
 </div>
