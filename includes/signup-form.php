@@ -1,4 +1,7 @@
 <?php
+	if($_SERVER['REQUEST_METHOD'] == "GET" && realpath(__FILE__) == realpath($_SERVER['SCRIPT_FILENAME'])) {
+        header('Location: ../index.php');
+    }
 	if(isset($_POST['signup'])) {
 		$screenName = $_POST['screenName'];
 		$email      = $_POST['email'];
@@ -35,10 +38,10 @@
 	<h3>Sign up </h3>
 	<ul>
 		<li>
-		    <input type="text" name="screenName" placeholder="Full Name"/>
+		    <input type="text" name="screenName" placeholder="Full Name" autocomplete="off"/>
 		</li>
 		<li>
-		    <input type="email" name="email" placeholder="Email"/>
+		    <input type="email" name="email" placeholder="Email" autocomplete="off"/>
 		</li>
 		<li>
 			<input type="password" name="password" placeholder="Password"/>
