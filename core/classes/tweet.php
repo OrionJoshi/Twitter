@@ -119,7 +119,7 @@
         }
 
         public function getTrendByHash($hashtag) {
-            $stmt = $this->pdo->prepare("SELECT * FROM `trends` WHERE `hashtag` LIKE :hashtag");
+            $stmt = $this->pdo->prepare("SELECT * FROM `trends` WHERE `hashtag` LIKE :hashtag ORDER BY DESC");
             $stmt->bindValue(':hashtag', $hashtag.'%');
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -147,7 +147,25 @@
                 }
             }
         }
+        public function addMention($status, $user_id, $tweet_id) {
+            preg_match_all("/@+([a-zA-Z0-9_]+)/i", $status, $matches);
 
+            if($matches) {
+                $result = array_values($matches[1]);
+            }
+
+            $sql = "SELECT * FROM `users` WHERE `username` = :mention";
+
+            foreach($result as $trend) {
+                if($stmt = $this->pdo->prepare($sql)) {
+                    $stmt->execute(array(':mention' => $trend));
+                    $data = $stmt->fetch(PDO::FETCH_OBJ);
+                }
+            }
+            if($data->user_id != $user_id) {
+                $this->NotifyUser($data->user_id, $user_id, $tweet_id, 'mention');
+            }
+        }
         public function getTweetLink($tweet) {
             $tweet = preg_replace("/(https?:\/\/)([\w]+.)([\w\.]+)/", "<a href='$0' target='_blink'>$0</a>", $tweet);
             $tweet = preg_replace("/#([\w]+)/", "<a href='".BASE_URL."hashtag/$1'>$0</a>", $tweet);
@@ -173,7 +191,7 @@
             $stmt->bindParam(":retweetMsg", $comment, PDO::PARAM_STR);
             $stmt->bindParam(":tweet_id", $tweet_id, PDO::PARAM_INT);
             $stmt->execute();
-
+            $this->NotifyUser($get_id, $user_id, $tweet_id, 'retweet');
         }
 
         public function checkRetweet($tweet_id, $user_id) {
@@ -208,7 +226,7 @@
         }
 
         public function getUserTweets($user_id) {
-            $stmt = $this->pdo->prepare("SELECT * FROM  `tweets` LEFT JOIN `users` ON `tweetBy` = `user_id` WHERE `tweetBy` = :user_id AND `retweetID` = '0' OR `retweetBy` = :user_id");
+            $stmt = $this->pdo->prepare("SELECT * FROM  `tweets` LEFT JOIN `users` ON `tweetBy` = `user_id` WHERE `tweetBy` = :user_id AND `retweetID` = '0' OR `retweetBy` = :user_id ORDER BY `tweetID` DESC");
             $stmt->bindParam(":user_id", $user_id, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -220,6 +238,9 @@
             $stmt->execute();
 
             $this->create('likes', array('likeBy' => $user_id, 'likeOn' => $tweet_id));
+            if($get_id != $user_id) {
+                $this->NotifyUser($get_id, $user_id, $tweet_id, 'like');
+            }
         }
 
         public function unlike($user_id, $tweet_id, $get_id) {
@@ -263,7 +284,7 @@
         }
 
         public function getTweetsByHash($hashtag) {
-            $stmt = $this->pdo->prepare("SELECT * FROM `tweets` LEFT JOIN `users` ON `tweetBy` = `user_id` WHERE `status` LIKE :hashtag OR `retweetMsg` LIKE :hashtag");
+            $stmt = $this->pdo->prepare("SELECT * FROM `tweets` LEFT JOIN `users` ON `tweetBy` = `user_id` WHERE `status` LIKE :hashtag OR `retweetMsg` LIKE :hashtag ORDER BY `tweetID` DESC");
             $stmt->bindValue(":hashtag", '%#'.$hashtag.'%', PDO::PARAM_STR);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_OBJ);
