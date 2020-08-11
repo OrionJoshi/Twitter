@@ -14,6 +14,12 @@
             return $var;
         }
 
+        public function preventAccess($request, $currentFile, $currently) {
+            if($request == "GET" && $currentFile == $currently) {
+                header('Location: '.BASE_URL.'index.php');
+            }
+        }
+
         public function search($search) {
             $stmt = $this->pdo->prepare("SELECT `user_id`, `username`, `screenName`, `profileImage`, `profileCover` FROM `users` WHERE `username` LIKE ? OR 'screenName' LIKE ?");
             $stmt->bindValue(1, $search. '%', PDO::PARAM_STR);
@@ -222,6 +228,10 @@
             } else {
                 return date('j M Y', $time);
             }
+        }
+        
+        public function NotifyUser($get_id, $user_id, $target, $type){
+            $this->create('notification', array('notificationFor' => $get_id, 'notificationFrom' => $user_id, 'target' => $target, 'type' => $type, 'time' => date('Y-m-d H:i:s')));  
         }
     }
 ?>
