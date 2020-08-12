@@ -1,8 +1,10 @@
 <?php 
     include '../init.php';
+    $getFromU->preventAccess($_SERVER['REQUEST_METHOD'], realpath(__FILE__), realpath($_SERVER['SCRIPT_FILENAME']));
+
     if(isset($_POST['showpopup']) && !empty($_POST['showpopup'])) {
         $tweetID = $_POST['showpopup'];
-        $user_id = $_SESSION['user_id'];
+        $user_id = @$_SESSION['user_id'];
         $tweet   = $getFromT->getPopupTweet($tweetID);
         $user    = $getFromU->userData($user_id);
         $likes   = $getFromT->likes($user_id, $tweetID);
@@ -38,7 +40,9 @@
                             </div>
                         </div>
                         <div class="tweet-show-popup-head-right">
-                            <button class="f-btn"><i class="fa fa-user-plus"></i> Follow </button>
+                            <?php if($tweet->tweetBy === $user_id){ ?>
+                                <button class='f-btn' onclick=location.href="profileEdit.php">Edit Profile</button>
+                           <?php  } ?>
                         </div>
                     </div>
                     <div class="tweet-show-popup-tweet-wrap">

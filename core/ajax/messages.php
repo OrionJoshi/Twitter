@@ -1,5 +1,6 @@
 <?php
     include '../init.php';
+    $getFromU->preventAccess($_SERVER['REQUEST_METHOD'], realpath(__FILE__), realpath($_SERVER['SCRIPT_FILENAME']));
 
     if(isset($_POST['deleteMsg']) && !empty($_POST['deleteMsg'])) {
         $user_id = $_SESSION['user_id'];
@@ -25,6 +26,7 @@
     if(isset($_POST['showMessage']) && !empty($_POST['showMessage'])){
         $user_id = $_SESSION['user_id'];
         $messages = $getFromM->recentMessages($user_id);
+        $getFromM->messagesViewed($user_id);
         ?>
         <div class="popup-message-wrap">
             <input id="popup-message-tweet" type="checkbox" checked="unchecked"/>
